@@ -69,6 +69,14 @@ Recommended model: `openai/gpt-5.4-mini`
 
 Reason: it is fast and relatively inexpensive, which makes it a good fit for short romaji-to-Japanese conversion requests.
 
+When using Google AI Studio / Gemini API:
+
+- Endpoint: `https://generativelanguage.googleapis.com/v1beta/openai/chat/completions`
+- Model candidate: `gemini-2.5-flash-lite`
+- If `gemini-3.1-flash-lite` is available in your Google AI Studio account, it is also a fast and capable candidate.
+
+Gemini models can be attractive for speed and cost, but converted text is sent to Google's API. Be careful with confidential or personal information.
+
 ## Default Shortcuts
 
 - `⌥ Enter`: Open or close the composer

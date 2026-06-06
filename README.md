@@ -41,6 +41,14 @@ OpenRouter を使う場合は、設定画面の `OpenRouterの初期設定を使
 
 理由: 応答が速く、料金も安めなので、このアプリのような短いローマ字変換用途に向いています。
 
+Google AI Studio / Gemini API を使う場合:
+
+- Endpoint: `https://generativelanguage.googleapis.com/v1beta/openai/chat/completions`
+- モデル候補: `gemini-2.5-flash-lite`
+- Google AI Studio上で `gemini-3.1-flash-lite` が使える場合は、それも高速で優秀な候補です。
+
+Gemini系モデルも速度とコスト面で魅力がありますが、変換するテキストはGoogleのAPIへ送信されます。機密情報や個人情報を含む文章を入力する場合は注意してください。
+
 ## ダウンロードして使う
 
 [Releases](https://github.com/salt1106/romaji/releases) から `Romaji.app.zip` をダウンロードしてください。
