@@ -420,6 +420,7 @@ struct SettingsView: View {
             Section {
                 Toggle(copy.fullTextMode, isOn: $settings.fullTextModeEnabled)
                 Toggle(copy.showShortcutHints, isOn: $settings.showShortcutHints)
+                Toggle(copy.keepConvertedTextInClipboard, isOn: $settings.keepConvertedTextInClipboard)
             } header: {
                 Text(copy.composer)
             } footer: {

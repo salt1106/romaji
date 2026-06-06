@@ -88,23 +88,21 @@ enum TextInserter {
         focusTarget: FocusTarget?
     ) {
         let pasteboard = NSPasteboard.general
+        let previousItems = savedPasteboardItems(from: pasteboard)
+        let shouldKeepConvertedText = AppSettings.shared.keepConvertedTextInClipboard
         guard hasAccessibilityPermission else {
             pasteboard.clearContents()
             pasteboard.setString(text, forType: .string)
             app?.activate(options: .activateAllWindows)
+            if !shouldKeepConvertedText {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.8) {
+                    restorePasteboard(previousItems)
+                }
+            }
             return
         }
 
-        let previousItems = pasteboard.pasteboardItems?.compactMap { item -> [String: Data]? in
-            var values: [String: Data] = [:]
-            for type in item.types {
-                if let data = item.data(forType: type) {
-                    values[type.rawValue] = data
-                }
-            }
-            return values
-        }
-        pendingPasteboardItems = previousItems
+        pendingPasteboardItems = shouldKeepConvertedText ? nil : previousItems
 
         pasteboard.clearContents()
         pasteboard.setString(text, forType: .string)
@@ -192,10 +190,25 @@ enum TextInserter {
 
     private static var pendingPasteboardItems: [[String: Data]]?
 
+    private static func savedPasteboardItems(from pasteboard: NSPasteboard) -> [[String: Data]]? {
+        pasteboard.pasteboardItems?.compactMap { item -> [String: Data]? in
+            var values: [String: Data] = [:]
+            for type in item.types {
+                if let data = item.data(forType: type) {
+                    values[type.rawValue] = data
+                }
+            }
+            return values
+        }
+    }
+
     private static func restorePendingPasteboard() {
-        let pasteboard = NSPasteboard.general
         let items = pendingPasteboardItems
         pendingPasteboardItems = nil
+        restorePasteboard(items)
+    }
+
+    private static func restorePasteboard(_ items: [[String: Data]]?) {
         guard let items else { return }
         let restored = items.map { values in
             let item = NSPasteboardItem()
@@ -204,6 +217,7 @@ enum TextInserter {
             }
             return item
         }
+        let pasteboard = NSPasteboard.general
         pasteboard.clearContents()
         pasteboard.writeObjects(restored)
     }

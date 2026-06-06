@@ -161,10 +161,15 @@ struct AppCopy {
     var composer: String { language == .japanese ? "入力パネル" : "Composer" }
     var fullTextMode: String { language == .japanese ? "Full Text Mode" : "Full Text Mode" }
     var showShortcutHints: String { language == .japanese ? "ショートカット説明を表示" : "Show Shortcut Hints" }
+    var keepConvertedTextInClipboard: String {
+        language == .japanese
+            ? "変換結果をクリップボードに残す"
+            : "Keep Converted Text in Clipboard"
+    }
     var composerFooter: String {
         language == .japanese
-            ? "Full Text Modeは、ローマ字入力が折り返し・複数行になったときに入力パネルを広げます。ショートカット説明はパネル下部に表示できます。"
-            : "Full Text Mode expands the composer when romaji wraps or spans multiple lines. Shortcut hints can appear at the bottom of the panel."
+            ? "Full Text Modeは、ローマ字入力が折り返し・複数行になったときに入力パネルを広げます。クリップボード設定をOFFにすると、変換後に元のクリップボードへ戻します。"
+            : "Full Text Mode expands the composer when romaji wraps or spans multiple lines. Turn clipboard retention off to restore your previous clipboard after conversion."
     }
     var accessibility: String { language == .japanese ? "アクセシビリティ" : "Accessibility" }
     var allowed: String { language == .japanese ? "許可済み" : "Allowed" }
@@ -264,6 +269,10 @@ final class AppSettings: ObservableObject {
         didSet { defaults.set(showShortcutHints, forKey: Keys.showShortcutHints) }
     }
 
+    @Published var keepConvertedTextInClipboard: Bool {
+        didSet { defaults.set(keepConvertedTextInClipboard, forKey: Keys.keepConvertedTextInClipboard) }
+    }
+
     @Published var language: AppLanguage {
         didSet {
             defaults.set(language.rawValue, forKey: Keys.language)
@@ -283,6 +292,7 @@ final class AppSettings: ObservableObject {
         static let submitShortcut = "submit-shortcut"
         static let fullTextModeEnabled = "full-text-mode-enabled"
         static let showShortcutHints = "show-shortcut-hints"
+        static let keepConvertedTextInClipboard = "keep-converted-text-in-clipboard"
         static let language = "language"
     }
 
@@ -306,6 +316,7 @@ final class AppSettings: ObservableObject {
         )
         fullTextModeEnabled = defaults.object(forKey: Keys.fullTextModeEnabled) as? Bool ?? true
         showShortcutHints = defaults.object(forKey: Keys.showShortcutHints) as? Bool ?? false
+        keepConvertedTextInClipboard = defaults.object(forKey: Keys.keepConvertedTextInClipboard) as? Bool ?? true
         language = AppLanguage(rawValue: defaults.string(forKey: Keys.language) ?? "") ?? .english
     }
 
