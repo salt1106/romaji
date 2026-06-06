@@ -1,0 +1,9 @@
+.build/
+dist/
+.DS_Store
+AGENTS.md
+*.xcodeproj/
+*.xcworkspace/
+xcuserdata/
+DerivedData/
+*.swp
