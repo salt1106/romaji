@@ -1,5 +1,7 @@
 # Romaji
 
+[日本語 README](README.ja.md)
+
 Romaji is a macOS 26 menu bar app that lets you type Japanese as loose romaji,
 convert it with an OpenAI-compatible Chat Completions API, and insert the
 converted Japanese back into the app you were using.
@@ -29,6 +31,14 @@ convert and paste the result.
 - An OpenAI-compatible Chat Completions API key
 
 ## Build And Install
+
+At the moment, Romaji is distributed as source code. You need to build it
+yourself to use it.
+
+Downloading the repository ZIP from GitHub is not enough by itself, because it
+does not contain a ready-to-run signed macOS app. A convenient download-only
+release would require a separately built, signed, and ideally notarized `.app`,
+`.zip`, or `.dmg`.
 
 ```sh
 zsh scripts/build-app.sh
