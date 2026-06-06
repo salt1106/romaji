@@ -26,19 +26,20 @@ convert and paste the result.
 ## Requirements
 
 - macOS 26
-- Xcode command line tools
-- Swift 6.2 or newer
 - An OpenAI-compatible Chat Completions API key
 
-## Build And Install
+Xcode command line tools and Swift are only required when building from source.
 
-At the moment, Romaji is distributed as source code. You need to build it
-yourself to use it.
+## Download
 
-Downloading the repository ZIP from GitHub is not enough by itself, because it
-does not contain a ready-to-run signed macOS app. A convenient download-only
-release would require a separately built, signed, and ideally notarized `.app`,
-`.zip`, or `.dmg`.
+Download `Romaji.app.zip` from [Releases](https://github.com/salt1106/romaji/releases).
+Unzip it and move `Romaji.app` to `/Applications`.
+
+The release build is ad-hoc signed and not notarized. On first launch, macOS may
+show a warning that the developer cannot be verified. In that case, open it from
+Finder with right-click or control-click, then choose `Open`.
+
+## Build From Source
 
 ```sh
 zsh scripts/build-app.sh
@@ -79,6 +80,9 @@ Romaji stores settings locally using macOS user defaults. API keys are not store
 in this repository. Text you convert is sent to the API endpoint you configure.
 Request logs and usage statistics are stored locally under the app support
 directory for Romaji.
+
+This is a personal open-source project. Please review and verify the source code
+yourself before entering sensitive text or API keys.
 
 ## License
 

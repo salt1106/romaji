@@ -4,14 +4,6 @@ Romaji は、ローマ字のまま雑に入力した文章をAIで自然な日�
 
 かな変換・漢字変換・細かいタイプミスを気にせず、思考をそのままローマ字で打って、あとからAIに日本語へ整えてもらうための道具です。
 
-## いまの配布状態
-
-現時点では「ソースコード公開」です。
-
-そのため、GitHubからZIPをダウンロードするだけでは、すぐに起動できる完成済みアプリとしては使えません。使うには、このリポジトリを手元でビルドする必要があります。
-
-ダウンロードするだけで使えるようにするには、別途ビルド済みの `.app` / `.zip` / `.dmg` を GitHub Releases などで配布する必要があります。さらに、macOSで警告なく使いやすくするには Developer ID 署名と公証が必要です。
-
 ## 主な機能
 
 - macOS 26 の Liquid Glass 風フローティング入力パネル
@@ -37,13 +29,21 @@ Romaji は、ローマ字のまま雑に入力した文章をAIで自然な日�
 ## 必要なもの
 
 - macOS 26
-- Xcode Command Line Tools
-- Swift 6.2 以降
 - OpenAI互換 Chat Completions API のAPIキー
+
+自分でビルドする場合だけ、Xcode Command Line Tools と Swift 6.2 以降が必要です。
 
 OpenRouter を使う場合は、設定画面の `OpenRouterの初期設定を使う` からエンドポイントとモデルの初期値を入れられます。
 
-## ビルドして使う
+## ダウンロードして使う
+
+[Releases](https://github.com/salt1106/romaji/releases) から `Romaji.app.zip` をダウンロードしてください。
+
+ZIPを展開して、`Romaji.app` を `/Applications` に移動します。
+
+配布しているアプリは ad-hoc 署名で、公証はしていません。初回起動時に macOS が「開発元を検証できません」のような警告を出す場合があります。その場合は Finder で `Romaji.app` を右クリック、または controlクリックして、`開く` を選んでください。
+
+## 自分でビルドする
 
 ```sh
 zsh scripts/build-app.sh
@@ -86,6 +86,8 @@ ROMAJI_SIGNING_IDENTITY="Apple Development: Your Name (TEAMID)" zsh scripts/buil
 APIキーや設定値は、このMac内のアプリ設定に保存されます。リポジトリにはAPIキーは含まれません。
 
 変換するテキストは、設定したAPIエンドポイントへ送信されます。送信ログと使用量統計はローカルの Romaji 用 Application Support ディレクトリに保存されます。
+
+個人で作っているオープンソースアプリなので、念のため、機密性の高い文章やAPIキーを入力する前に、ソースコードをご自身でも確認・検証してください。
 
 ## ライセンス
 
