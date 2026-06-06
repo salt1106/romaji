@@ -373,7 +373,15 @@ struct SettingsView: View {
                 Button(copy.useOpenRouterDefaults) {
                     settings.useOpenRouter()
                 }
-                SecureField(copy.apiKey, text: $settings.apiKey)
+                HStack {
+                    SecureField(copy.apiKey, text: $settings.apiKey)
+                    if !settings.apiKey.isEmpty {
+                        Button(copy.clearAPIKey) {
+                            settings.apiKey = ""
+                        }
+                        .controlSize(.small)
+                    }
+                }
                 TextField(copy.model, text: $settings.model)
                 TextField(copy.endpoint, text: $settings.endpoint)
             } header: {

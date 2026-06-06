@@ -140,6 +140,7 @@ struct AppCopy {
     }
     var useOpenRouterDefaults: String { language == .japanese ? "OpenRouterの初期設定を使う" : "Use OpenRouter defaults" }
     var apiKey: String { language == .japanese ? "APIキー" : "API Key" }
+    var clearAPIKey: String { language == .japanese ? "APIキーを消去" : "Clear API Key" }
     var model: String { language == .japanese ? "モデル" : "Model" }
     var endpoint: String { language == .japanese ? "エンドポイント" : "Endpoint" }
     var aiFooter: String {

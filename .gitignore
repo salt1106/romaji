@@ -3,6 +3,7 @@ dist/
 release/
 .DS_Store
 AGENTS.md
+App/AppIcon.iconset/
 *.xcodeproj/
 *.xcworkspace/
 xcuserdata/
