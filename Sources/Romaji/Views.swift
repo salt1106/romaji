@@ -339,6 +339,7 @@ final class CommandTextView: NSTextView {
 struct SettingsView: View {
     @ObservedObject private var settings = AppSettings.shared
     @ObservedObject private var loginItem = LoginItemManager.shared
+    @ObservedObject private var accessibility = AccessibilityPermissionMonitor.shared
 
     var body: some View {
         let copy = settings.copy
@@ -430,12 +431,21 @@ struct SettingsView: View {
             Section {
                 LabeledContent(
                     copy.accessibility,
-                    value: TextInserter.hasAccessibilityPermission ? copy.allowed : copy.notAllowed
+                    value: accessibility.isAllowed ? copy.allowed : copy.notAllowed
                 )
-                Button(copy.allowAccessibility) {
-                    TextInserter.requestAccessibilityPermission()
+                HStack {
+                    Button(copy.allowAccessibility) {
+                        TextInserter.requestAccessibilityPermission()
+                        accessibility.refresh()
+                    }
+                    .disabled(accessibility.isAllowed)
+                    Button(copy.openAccessibilitySettings) {
+                        TextInserter.openAccessibilitySettings()
+                    }
+                    Button(copy.refresh) {
+                        accessibility.refresh()
+                    }
                 }
-                .disabled(TextInserter.hasAccessibilityPermission)
             } footer: {
                 Text(copy.accessibilityFooter)
             }
@@ -443,7 +453,10 @@ struct SettingsView: View {
         .formStyle(.grouped)
         .padding()
         .frame(width: 560, height: 760)
-        .onAppear { loginItem.refresh() }
+        .onAppear {
+            loginItem.refresh()
+            accessibility.refresh()
+        }
     }
 }
 

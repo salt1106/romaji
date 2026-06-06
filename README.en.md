@@ -86,6 +86,23 @@ Gemini models can be attractive for speed and cost, but converted text is sent t
 
 Shortcuts can be changed in Settings.
 
+## If Accessibility Permission Does Not Apply
+
+Romaji uses macOS Accessibility permission to insert converted Japanese back into
+the original text field.
+
+If you allowed permission but Romaji still does not detect it, try this:
+
+1. Quit Romaji.
+2. Open `System Settings > Privacy & Security > Accessibility`.
+3. If Romaji is listed, remove it once.
+4. Add `/Applications/Romaji.app` again and allow it.
+5. Relaunch Romaji.
+
+The free release is ad-hoc signed and not notarized. After updates, macOS can
+occasionally keep an old permission entry attached to the previous app build. If
+that happens, re-register Romaji with the steps above.
+
 ## Privacy
 
 Romaji stores settings locally using macOS user defaults. API keys are not stored

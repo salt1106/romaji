@@ -58,6 +58,36 @@ final class GlobalHotKey {
 }
 
 @MainActor
+final class AccessibilityPermissionMonitor: ObservableObject {
+    static let shared = AccessibilityPermissionMonitor()
+
+    @Published private(set) var isAllowed = TextInserter.hasAccessibilityPermission
+
+    private var timer: Timer?
+
+    private init() {
+        timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { [weak self] _ in
+            Task { @MainActor in
+                self?.refresh()
+            }
+        }
+        NotificationCenter.default.addObserver(
+            forName: NSApplication.didBecomeActiveNotification,
+            object: nil,
+            queue: .main
+        ) { [weak self] _ in
+            MainActor.assumeIsolated {
+                self?.refresh()
+            }
+        }
+    }
+
+    func refresh() {
+        isAllowed = TextInserter.hasAccessibilityPermission
+    }
+}
+
+@MainActor
 enum TextInserter {
     static var hasAccessibilityPermission: Bool {
         AXIsProcessTrusted()
@@ -66,6 +96,14 @@ enum TextInserter {
     static func requestAccessibilityPermission() {
         let options = ["AXTrustedCheckOptionPrompt": true]
         AXIsProcessTrustedWithOptions(options as CFDictionary)
+        openAccessibilitySettings()
+    }
+
+    static func openAccessibilitySettings() {
+        guard let url = URL(string: "x-apple.systempreferences:com.apple.preference.security?Privacy_Accessibility") else {
+            return
+        }
+        NSWorkspace.shared.open(url)
     }
 
     static func focusTarget() -> FocusTarget? {

@@ -175,10 +175,12 @@ struct AppCopy {
     var allowed: String { language == .japanese ? "許可済み" : "Allowed" }
     var notAllowed: String { language == .japanese ? "未許可" : "Not allowed" }
     var allowAccessibility: String { language == .japanese ? "アクセシビリティアクセスを許可" : "Allow accessibility access" }
+    var openAccessibilitySettings: String { language == .japanese ? "システム設定を開く" : "Open System Settings" }
+    var refresh: String { language == .japanese ? "再確認" : "Refresh" }
     var accessibilityFooter: String {
         language == .japanese
-            ? "許可ダイアログはこのボタンを押したときだけ表示します。APIキーはこのアプリの設定にローカル保存されます。"
-            : "The permission prompt appears only after pressing this button. The API key is stored locally in this app's settings."
+            ? "許可したのに反映されない場合は、Romajiを終了してからシステム設定でRomajiを一度削除し、もう一度追加してください。APIキーはこのアプリの設定にローカル保存されます。"
+            : "If permission does not apply after allowing it, quit Romaji, remove Romaji from Accessibility in System Settings, then add it again. The API key is stored locally in this app's settings."
     }
     var pressShortcut: String { language == .japanese ? "ショートカットを押してください..." : "Press shortcut..." }
     var requestLogHeading: String { language == .japanese ? "送信ログ" : "Request Log" }
