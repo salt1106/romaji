@@ -1,89 +1,96 @@
 # Romaji
 
-[日本語 README](README.ja.md)
+[English README](README.en.md)
 
-Romaji is a macOS 26 menu bar app that lets you type Japanese as loose romaji,
-convert it with an OpenAI-compatible Chat Completions API, and insert the
-converted Japanese back into the app you were using.
+Romaji は、ローマ字のまま雑に入力した文章をAIで自然な日本語に変換し、元のアプリの入力欄へ挿入する macOS 26 用メニューバーアプリです。
 
-The app is built for quick, low-friction drafting: open the floating composer,
-type romaji without worrying too much about typos or kana/kanji conversion, then
-convert and paste the result.
+かな変換・漢字変換・細かいタイプミスを気にせず、思考をそのままローマ字で打って、あとからAIに日本語へ整えてもらうための道具です。
 
-## Features
+## 主な機能
 
-- Floating Liquid Glass composer for macOS 26
-- OpenAI-compatible API support, including OpenRouter
-- Custom endpoint, model, API key, and system prompt
-- Configurable shortcuts
-- Accessibility-based insertion back into the previous text field
-- Request log with input/output text, latency, status, and token usage
-- Usage statistics for total input tokens, output tokens, total tokens, input
-  characters, and request count
-- English and Japanese UI
-- Optional launch at login
+- macOS 26 の Liquid Glass 風フローティング入力パネル
+- OpenRouter など OpenAI互換 Chat Completions API に対応
+- APIキー、エンドポイント、モデル、送信プロンプトを設定可能
+- ショートカットを変更可能
+- 変換後の日本語を元のアプリの入力欄へ挿入
+- 送信ログ
+  - 変換前テキスト
+  - 変換後テキスト
+  - ステータス
+  - 待ち時間
+  - 入力/出力トークン
+- 使用量統計
+  - 入力トークン合計
+  - 出力トークン合計
+  - 総トークン
+  - 入力文字数
+  - 送信回数
+- 英語/日本語UI切り替え
+- ログイン時起動
 
-## Requirements
+## 必要なもの
 
 - macOS 26
-- An OpenAI-compatible Chat Completions API key
+- OpenAI互換 Chat Completions API のAPIキー
 
-Xcode command line tools and Swift are only required when building from source.
+自分でビルドする場合だけ、Xcode Command Line Tools と Swift 6.2 以降が必要です。
 
-## Download
+OpenRouter を使う場合は、設定画面の `OpenRouterの初期設定を使う` からエンドポイントとモデルの初期値を入れられます。
 
-Download `Romaji.app.zip` from [Releases](https://github.com/salt1106/romaji/releases).
-Unzip it and move `Romaji.app` to `/Applications`.
+## ダウンロードして使う
 
-The release build is ad-hoc signed and not notarized. On first launch, macOS may
-show a warning that the developer cannot be verified. In that case, open it from
-Finder with right-click or control-click, then choose `Open`.
+[Releases](https://github.com/salt1106/romaji/releases) から `Romaji.app.zip` をダウンロードしてください。
 
-## Build From Source
+ZIPを展開して、`Romaji.app` を `/Applications` に移動します。
+
+配布しているアプリは ad-hoc 署名で、公証はしていません。初回起動時に macOS が「開発元を検証できません」のような警告を出す場合があります。その場合は Finder で `Romaji.app` を右クリック、または controlクリックして、`開く` を選んでください。
+
+## 自分でビルドする
 
 ```sh
 zsh scripts/build-app.sh
 open /Applications/Romaji.app
 ```
 
-By default, the build script uses ad-hoc signing. If you want a stable Apple
-Development signature, set `ROMAJI_SIGNING_IDENTITY`:
+初回起動後、メニューバーの Romaji アイコンから `設定...` を開いて、APIキー、モデル、エンドポイントを設定してください。
+
+## 署名について
+
+標準では ad-hoc 署名でビルドします。
+
+Apple Development 証明書で署名したい場合は、`ROMAJI_SIGNING_IDENTITY` を指定してください。
 
 ```sh
 ROMAJI_SIGNING_IDENTITY="Apple Development: Your Name (TEAMID)" zsh scripts/build-app.sh
 ```
 
-Using the same signing identity across builds helps macOS keep Accessibility
-permission attached to the app.
+同じ署名IDでビルドし続けると、macOSのアクセシビリティ権限が更新のたびに外れにくくなります。
 
-## Setup
+## 初期ショートカット
 
-1. Launch `Romaji.app`.
-2. Open the menu bar item and choose `Settings...`.
-3. Enter your API key, endpoint, and model.
-4. Grant Accessibility access when prompted.
+- `⌥ Enter`: 入力パネルを開く/閉じる
+- `Enter`: 改行
+- `⌘ Enter`: 日本語へ変換して挿入
+- `Esc`: 閉じる
 
-OpenRouter defaults can be filled from Settings with `Use OpenRouter defaults`.
+ショートカットは設定画面から変更できます。
 
-## Default Shortcuts
+## 使い方
 
-- `⌥ Enter`: Open or close the composer
-- `Enter`: New line
-- `⌘ Enter`: Convert and insert
-- `Esc`: Close
+1. Romaji を起動します。
+2. `⌥ Enter` で入力パネルを開きます。
+3. ローマ字のまま文章を入力します。
+4. `⌘ Enter` で変換します。
+5. 変換後の日本語が元の入力欄へ挿入されます。
 
-Shortcuts can be changed in Settings.
+## プライバシー
 
-## Privacy
+APIキーや設定値は、このMac内のアプリ設定に保存されます。リポジトリにはAPIキーは含まれません。
 
-Romaji stores settings locally using macOS user defaults. API keys are not stored
-in this repository. Text you convert is sent to the API endpoint you configure.
-Request logs and usage statistics are stored locally under the app support
-directory for Romaji.
+変換するテキストは、設定したAPIエンドポイントへ送信されます。送信ログと使用量統計はローカルの Romaji 用 Application Support ディレクトリに保存されます。
 
-This is a personal open-source project. Please review and verify the source code
-yourself before entering sensitive text or API keys.
+個人で作っているオープンソースアプリなので、念のため、機密性の高い文章やAPIキーを入力する前に、ソースコードをご自身でも確認・検証してください。
 
-## License
+## ライセンス
 
 MIT
