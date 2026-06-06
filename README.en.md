@@ -65,6 +65,10 @@ permission attached to the app.
 
 OpenRouter defaults can be filled from Settings with `Use OpenRouter defaults`.
 
+Recommended model: `openai/gpt-5.4-mini`
+
+Reason: it is fast and relatively inexpensive, which makes it a good fit for short romaji-to-Japanese conversion requests.
+
 ## Default Shortcuts
 
 - `⌥ Enter`: Open or close the composer

@@ -37,6 +37,10 @@ Romaji は、ローマ字のまま雑に入力した文章をAIで自然な日�
 
 OpenRouter を使う場合は、設定画面の `OpenRouterの初期設定を使う` からエンドポイントとモデルの初期値を入れられます。
 
+おすすめモデル: `openai/gpt-5.4-mini`
+
+理由: 応答が速く、料金も安めなので、このアプリのような短いローマ字変換用途に向いています。
+
 ## ダウンロードして使う
 
 [Releases](https://github.com/salt1106/romaji/releases) から `Romaji.app.zip` をダウンロードしてください。
