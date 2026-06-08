@@ -63,14 +63,7 @@ final class AccessibilityPermissionMonitor: ObservableObject {
 
     @Published private(set) var isAllowed = TextInserter.hasAccessibilityPermission
 
-    private var timer: Timer?
-
     private init() {
-        timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { [weak self] _ in
-            Task { @MainActor in
-                self?.refresh()
-            }
-        }
         NotificationCenter.default.addObserver(
             forName: NSApplication.didBecomeActiveNotification,
             object: nil,
